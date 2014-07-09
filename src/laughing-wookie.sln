@@ -5,7 +5,17 @@ VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "wookie", "wookie\wookie.fsproj", "{E8676849-2ADC-4875-97F6-53A22964AA79}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Server", "Server\Server.fsproj", "{1E6D72A5-5864-45A8-9B65-85115D6ED9F1}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "server", "Server\server.fsproj", "{1E6D72A5-5864-45A8-9B65-85115D6ED9F1}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "wookie.tests", "Tests\wookie.tests.fsproj", "{2F5086A6-9072-4127-8D3C-0AFD08F9473E}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "prewookie", "prewookie\prewookie.fsproj", "{129AC594-46E1-4802-92C5-B3D138EC8135}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solutions Items", "Solutions Items", "{F1CB0289-008C-4C9D-A5B8-2D2B71D6E5E7}"
+	ProjectSection(SolutionItems) = preProject
+		..\LICENSE.md = ..\LICENSE.md
+		..\README.md = ..\README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +31,14 @@ Global
 		{1E6D72A5-5864-45A8-9B65-85115D6ED9F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E6D72A5-5864-45A8-9B65-85115D6ED9F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E6D72A5-5864-45A8-9B65-85115D6ED9F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F5086A6-9072-4127-8D3C-0AFD08F9473E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F5086A6-9072-4127-8D3C-0AFD08F9473E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F5086A6-9072-4127-8D3C-0AFD08F9473E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F5086A6-9072-4127-8D3C-0AFD08F9473E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{129AC594-46E1-4802-92C5-B3D138EC8135}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{129AC594-46E1-4802-92C5-B3D138EC8135}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{129AC594-46E1-4802-92C5-B3D138EC8135}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{129AC594-46E1-4802-92C5-B3D138EC8135}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

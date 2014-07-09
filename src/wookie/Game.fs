@@ -1,32 +1,46 @@
-﻿module Game
+﻿[<RequireQualifiedAccess>]
+module Game
 
 open System
 open Newtonsoft.Json
 open Core
+    
+
 
 type Commands =
-    | CreateGame of Guid*DateTime*string*string
+    | CreateGame of Guid*DateTime*DateTime*string
     | JoinGame of Guid
     | AbandonGame of Guid
 
 type Events =
-    | GameCreated of Guid*DateTime*string*string
+    | GameCreated of Guid*DateTime*DateTime*string
     | GameJoined of Guid
     | GameAbandonned of Guid
+
+type State = {
+    nbPlayer : int;
+    location : string;
+    date : DateTime;
+}
+with static member Initial = { nbPlayer = 0; location=""; date=DateTime.Now}
+
+let apply state = function
+    | GameCreated (gameId, creationDate, gameDate, gameLocation) -> { state with location = gameLocation ; date = gameDate }
+    | GameJoined (gameId) -> { state with nbPlayer= state.nbPlayer + 1 }
+    | GameAbandonned (gameId) -> { state with nbPlayer= state.nbPlayer - 1  }
+
+open Validator 
+
+module private Assert =
+    let validCreateGame location date = validator (fun l -> l="Toulouse"  ) ["the location is unkown"] location 
+                                     <* validator (fun d -> d> DateTime.Now.AddHours(24.0)) ["the game must take place in 24 hrs at least"] date
+    let validJoinGame game = validator (fun g -> g.nbPlayer <10   ) ["the Nb max of player is 10"] game 
+    let validAbandonGame game = validator (fun g-> g.date > DateTime.Now.AddHours(8.0)) ["It is not allowed to withdraw from a game 48 hrs before the beginning"] game
+
     
-let execute = function
-    | CreateGame(id,date,location,name) -> id.ToString() 
-    | JoinGame(id) -> id.ToString()
-    | AbandonGame(id) -> id.ToString()
+let exec state = function
+    | CreateGame (gameId, creationDate, gameDate, gameLocation) -> Assert.validCreateGame gameLocation gameDate <?> GameCreated(gameId, creationDate, gameDate, gameLocation) 
+    | JoinGame (gameId) -> Assert.validJoinGame state <?> GameJoined(gameId)
+    | AbandonGame (gameId) -> Assert.validAbandonGame state <?> GameAbandonned(gameId)
     
-let handleCommand jsonCmd =
-    let command = JsonConvert.DeserializeObject<Commands>(jsonCmd)
-    execute command
         
-    
-let (|GameCommand|_|) commandName = 
-    match commandName with 
-    | InvariantEqual "CreateGame" -> Some("CreateGame requested")
-    | InvariantEqual "JoinGame" -> Some("JoinGame requested")
-    | InvariantEqual "AbandonGame" -> Some("AbandonGame requested")
-    | _ -> None
