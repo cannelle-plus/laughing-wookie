@@ -32,10 +32,10 @@ let apply state = function
 open Validator 
 
 module private Assert =
-    let validCreateGame location date = validator (fun l -> l="Toulouse"  ) ["the location is unkown"] location 
-                                     <* validator (fun d -> d> DateTime.Now.AddHours(24.0)) ["the game must take place in 24 hrs at least"] date
+    let validCreateGame location date = validator (fun l -> true  ) ["the location is unkown"] location 
+                                     <* validator (fun d -> true) ["the game must take place in 24 hrs at least"] date
     let validJoinGame game = validator (fun g -> g.nbPlayer <10   ) ["the Nb max of player is 10"] game 
-    let validAbandonGame game = validator (fun g-> g.date > DateTime.Now.AddHours(8.0)) ["It is not allowed to withdraw from a game 48 hrs before the beginning"] game
+    let validAbandonGame game = validator (fun g-> true) ["It is not allowed to withdraw from a game 48 hrs before the beginning"] game
 
     
 let exec state = function

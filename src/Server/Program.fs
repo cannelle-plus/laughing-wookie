@@ -27,11 +27,13 @@ let listener (handler:(HttpListenerRequest->HttpListenerResponse->Async<unit>)) 
             Async.Start(handler context.Request context.Response)
     } |> Async.Start
 
-let getData (request:HttpListenerRequest) =
-    if request.HasEntityBody then
-        let reader = new System.IO.StreamReader(request.InputStream, request.ContentEncoding)
-        reader.ReadToEnd()
-    else ""
+let json = "{\"Id\":\"88085239-6f0f-48c6-b73d-017333cb99bb\",\"Version\":0,\"CorrelationId\":\"88085239-6f0f-48c6-b73d-017333cb99bc\",\"TokenId\":\"88085239-6f0f-48c6-b73d-017333cb99ba\",\"PayLoad\":{\"Case\":\"CreateGame\",\"Fields\": [\"88085239-6f0f-48c6-b73d-017333cb99bb\",\"2014-12-31T10:00:00\",\"2014-12-31T09:34:12.456\",\"Toulouse\"]}}"
+
+let getData (request:HttpListenerRequest) = json
+//    if request.HasEntityBody then
+//        let reader = new System.IO.StreamReader(request.InputStream, request.ContentEncoding)
+//        reader.ReadToEnd()
+//    else ""
 
 let getCommandName (request:HttpListenerRequest) =    
     let urlFragments = request.Url.PathAndQuery.Split('/')
@@ -39,12 +41,6 @@ let getCommandName (request:HttpListenerRequest) =
         | [||] -> "welcome home"
         | [|rrrr;controller;action|] -> action + controller
         | _ -> "unknown"
-
-
-
-
-    
-
 
 [<EntryPoint>]
 let main argv = 
