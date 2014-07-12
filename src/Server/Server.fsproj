@@ -60,6 +60,9 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="EventStore.ClientAPI">
+      <HintPath>..\libs\getEventStore 3.0.0 rc2\EventStore.ClientAPI.dll</HintPath>
+    </Reference>
     <Reference Include="FSharp.Data.SqlProvider">
       <HintPath>..\packages\SQLProvider.0.0.9-alpha\lib\net40\FSharp.Data.SqlProvider.dll</HintPath>
       <Private>True</Private>
@@ -67,6 +70,9 @@
     <Reference Include="mscorlib" />
     <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <Private>True</Private>
+    </Reference>
+    <Reference Include="protobuf-net">
+      <HintPath>..\libs\getEventStore 3.0.0 rc2\protobuf-net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -76,6 +82,11 @@
     <ProjectReference Include="..\prewookie\prewookie.fsproj">
       <Name>prewookie</Name>
       <Project>{129ac594-46e1-4802-92c5-b3d138ec8135}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\wookie\wookie.fsproj">
+      <Name>wookie</Name>
+      <Project>{e8676849-2adc-4875-97f6-53a22964aa79}</Project>
       <Private>True</Private>
     </ProjectReference>
   </ItemGroup>

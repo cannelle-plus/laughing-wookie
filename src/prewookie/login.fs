@@ -3,10 +3,12 @@
 open System
 
 
-let isLogged =
-    let resultQuery =  database.isLoggedIn(Some("uuidGiven"))
-    match resultQuery with
-    | (Some(expirationDate),Some(userName)) -> if DateTime.Parse( expirationDate) > DateTime.Now then true
-                                               else false
-    | (_,_) -> false
+let isLogged tokenId = 
+    let result = database.isLoggedIn tokenId
+    match result with
+    | Some((expirationDate,userName)) -> userName
+    | _ -> "" 
+     
+    
+    
 

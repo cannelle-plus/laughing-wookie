@@ -61,7 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="EventStore.ClientAPI">
-      <HintPath>..\packages\getEventStore 3.0.0 rc2\EventStore.ClientAPI.dll</HintPath>
+      <HintPath>..\libs\getEventStore 3.0.0 rc2\EventStore.ClientAPI.dll</HintPath>
     </Reference>
     <Reference Include="FsUnit.CustomMatchers">
       <HintPath>..\packages\FsUnit.xUnit.Sample.1.3.0.1\Lib\net40\FsUnit.CustomMatchers.dll</HintPath>
@@ -78,6 +78,9 @@
     <Reference Include="NHamcrest">
       <HintPath>..\packages\FsUnit.xUnit.Sample.1.3.0.1\Lib\net40\NHamcrest.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="protobuf-net">
+      <HintPath>..\libs\getEventStore 3.0.0 rc2\protobuf-net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

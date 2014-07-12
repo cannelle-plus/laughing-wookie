@@ -15,7 +15,7 @@ let conn endPoint =
 
     
 /// Creates event store based repository.
-let makeRepository (conn:IEventStoreConnection) category (serialize:obj -> string * byte array, deserialize: Type * string * byte array -> obj) (user:UserCredentials) =
+let makeRepository (conn:IEventStoreConnection)  (serialize:obj -> string * byte array, deserialize: Type * string * byte array -> obj) (user:UserCredentials) category=
 
     let streamId (id:Guid) = category + "-" + id.ToString("N").ToLower()
 

@@ -1,18 +1,20 @@
 ﻿// Learn more about F# at http://fsharp.net
 // See the 'F# Tutorial' project for more help.
 
-
-
-
 #light
 open System
 open System.Net
 open System.Text
 open System.IO
-
+open System
+open EventStore.ClientAPI.SystemData
 
 let host = "http://localhost:8081/"
 let siteRoot = @"C:\Mes documents\Visual Studio 2008\Projects\Drive\SiteWeb\"
+let endPoint = new System.Net.IPEndPoint(System.Net.IPAddress.Parse("127.0.0.1"), 1113)
+let endPointHttp = new System.Net.IPEndPoint(System.Net.IPAddress.Parse("127.0.0.1"), 2113)
+
+let conn = EventStore.conn endPoint
 
 let listener (handler:(HttpListenerRequest->HttpListenerResponse->Async<unit>)) =
     let hl = new HttpListener()
@@ -37,6 +39,10 @@ let getCommandName (request:HttpListenerRequest) =
         | [||] -> "welcome home"
         | [|rrrr;controller;action|] -> action + controller
         | _ -> "unknown"
+
+
+
+
     
 
 
@@ -44,7 +50,7 @@ let getCommandName (request:HttpListenerRequest) =
 let main argv = 
     listener (fun req resp ->
         async {
-            let txt = (CommandHandler.handle (getData req)) (getCommandName req)
+            let txt = MessageHandler.handle conn (getData req) (getCommandName req) 
             let txtBytes = Encoding.ASCII.GetBytes(txt)
             resp.ContentType <- "text/html"
             resp.Headers.Add("Access-Control-Allow-Origin", "*")

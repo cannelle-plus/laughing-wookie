@@ -13,7 +13,7 @@ let user = UserCredentials("admin","changeit")
 let handleCommand' =
     Aggregate.makeHandler 
         { initial = Game.State.Initial; apply = Game.apply; exec = Game.exec }
-        (EventStore.makeRepository conn "Game" Serialization.serializer user )
+        (EventStore.makeRepository conn  Serialization.serializer user "Game")
 
 let handleCommand (id,v) c = handleCommand' (id,v) c 
 

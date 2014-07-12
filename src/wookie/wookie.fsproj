@@ -57,12 +57,13 @@
     <Compile Include="EventStore.fs" />
     <Compile Include="Validator.fs" />
     <Compile Include="Game.fs" />
+    <Compile Include="commandHandler.fs" />
     <Content Include="packages.config" />
     <Content Include="app.config" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="EventStore.ClientAPI">
-      <HintPath>..\packages\getEventStore 3.0.0 rc2\EventStore.ClientAPI.dll</HintPath>
+      <HintPath>..\libs\getEventStore 3.0.0 rc2\EventStore.ClientAPI.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
@@ -73,7 +74,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="protobuf-net">
-      <HintPath>..\packages\getEventStore 3.0.0 rc2\protobuf-net.dll</HintPath>
+      <HintPath>..\libs\getEventStore 3.0.0 rc2\protobuf-net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
