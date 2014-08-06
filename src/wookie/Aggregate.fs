@@ -21,8 +21,8 @@ let makeHandler (aggregate:Aggregate<'TState, 'TCommand, 'TEvent>) (load:System.
         match value with
         | Choice1Of2 event -> event 
                               |> commit (id,version) 
-                              "OK"
-        | Choice2Of2 messages ->  messages |> List.fold (fun acc x-> acc + ";" + x) ""
+                              Choice1Of2 event 
+        | Choice2Of2 messages ->  Choice2Of2 messages  
         
     
 
