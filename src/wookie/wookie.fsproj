@@ -63,6 +63,7 @@
     <Compile Include="Core.fs" />
     <Compile Include="Aggregate.fs" />
     <Compile Include="Validator.fs" />
+    <Compile Include="Player.fs" />
     <Compile Include="Game.fs" />
     <Compile Include="commandHandler.fs" />
     <Content Include="packages.config" />

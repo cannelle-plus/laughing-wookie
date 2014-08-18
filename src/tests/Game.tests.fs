@@ -1,55 +1,38 @@
 ﻿module GameTests
-
 open System
 open Xunit
-open FsUnit.Xunit
-open Message 
+open Core
+open Game
+open System.Diagnostics
+open Message
 open Newtonsoft.Json
 
-exception AggregateException of string
-
-let Given evts = Core.makeEventRepo evts
-let When cmd repo  = 
-    let value = MessageHandler.handle Core.repoAuth repo cmd "CreateGame"
-    match value with 
-    | Choice1Of2 event -> event
-    | Choice2Of2 messages -> raise (AggregateException(messages |> List.fold (fun acc x-> acc + ";" + x) "" )) 
-let Then = should equal 
+let When = execThe CommandHandler.handleGames 
 
 [<Xunit.Fact>]
-let createGame() = 
-    let correlationId = System.Guid.Parse("88085239-6f0f-48c6-b73d-017333cb99bc")
+let ``Given nothing happened yet, when we create a game, a game is created``  () = 
+    let gameId = System.Guid.Parse("88085239-6f0f-48c6-b73d-017333cb99bb")    
+    let playerId = System.Guid.Parse("88085239-6f0f-48c6-b73d-017333cb99bf")
+    let date = DateTime.Parse("2014-12-31 09:34:12.456")
+    let location = "Toulouse"
+    
+    Given  []
+    |> When (gameId,0) (CreateGame( playerId,date,location))
+    |> Then (Choice1Of2 (GameCreated(playerId,date,location)))
+
+
+    
+[<Xunit.Fact>]
+let ``Given a game is created, when we create this game, an excption is raised``  () = 
     let gameId = System.Guid.Parse("88085239-6f0f-48c6-b73d-017333cb99bb")
-    let username = "yoann"
+    let playerId = System.Guid.Parse("88085239-6f0f-48c6-b73d-017333cb99bf")
     let date = DateTime.Parse("2014-12-31 09:34:12.456")
     let location = "Toulouse"
 
-    let createGameExample =
-        {
-            Command.Id =  Guid.NewGuid();
-            Version = 0;
-            CorrelationId = correlationId;
-            TokenId = Guid.NewGuid();
-            PayLoad = Game.Commands.CreateGame( gameId,username,date,location)
-        }
-    let gameCreated = Game.Events.GameCreated( gameId,username,date,location)
-//        {
-//            Event.Id =  Guid.NewGuid();
-//            Version = 0;
-//            CorrelationId = correlationId;
-//            PayLoad = 
-//        }
+    Given  [ GameCreated( playerId,date,location) ]
+    |> When (gameId,0) (CreateGame(playerId,date,location))
+    |> Then (Choice2Of2 (["the game is already scheduled"]))
 
-    let json = JsonConvert.SerializeObject(createGameExample)
 
-    //    let msg = JsonConvert.[<Message<Game.Commands>>(json)
 
-    Given []
-    |> When json
-    |> Then gameCreated
-
-    
-    
-    
-
-   
+      

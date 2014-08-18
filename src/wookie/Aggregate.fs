@@ -1,6 +1,7 @@
 ﻿[<RequireQualifiedAccess>]
 module Aggregate
 
+open Core
 open System 
 
 type Aggregate<'TState, 'TCommand,'TEvent> = {
@@ -8,6 +9,7 @@ type Aggregate<'TState, 'TCommand,'TEvent> = {
     apply : 'TState->'TEvent->'TState;
     exec : 'TState -> 'TCommand->Choice<'TEvent, string list>;
 }
+
 
 
 type Id = System.Guid
@@ -20,9 +22,8 @@ let makeHandler (aggregate:Aggregate<'TState, 'TCommand, 'TEvent>) (load:System.
         let value = aggregate.exec state command
         match value with
         | Choice1Of2 event -> event 
-                              |> commit (id,version) 
-                              Choice1Of2 event 
-        | Choice2Of2 messages ->  Choice2Of2 messages  
+                              |> commit (id,version) |> ignore
+                              Choice1Of2  event 
+        | Choice2Of2 messages ->  Choice2Of2 messages 
         
-    
 

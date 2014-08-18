@@ -69,6 +69,8 @@
     <Compile Include="Serialization.fs" />
     <Compile Include="EventStore.fs" />
     <Compile Include="repoAuthSqlite.fs" />
+    <Compile Include="handler.fs" />
+    <Compile Include="WookieServer.fs" />
     <Compile Include="Program.fs" />
     <None Include="App.config" />
     <None Include="x86\SQLite.Interop.dll">
@@ -108,7 +110,8 @@
     </Reference>
     <ProjectReference Include="..\prewookie\prewookie.fsproj">
       <Name>prewookie</Name>
-      <Project>129AC594-46E1-4802-92C5-B3D138EC8135</Project>
+      <Project>{129ac594-46e1-4802-92c5-b3d138ec8135}</Project>
+      <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="..\wookie\wookie.fsproj">
       <Name>wookie</Name>

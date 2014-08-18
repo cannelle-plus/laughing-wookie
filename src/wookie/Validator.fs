@@ -1,5 +1,7 @@
 ﻿module Validator
 
+open Core
+
 let validator predicate error x =
     if predicate x then Choice1Of2 x
     else Choice2Of2 error
@@ -42,7 +44,7 @@ let inline ( *>) a b = lift2 (fun _ z -> z) a b
 let inline ( <*) a b = lift2 (fun z _ -> z) a b
 
 /// Composes a choice type with a non choice type.
-let inline (<?>) a b = lift2 (fun _ z -> z) a              (Choice1Of2 b)
+let inline (<?>) a b = lift2 (fun _ z -> z) a  (Choice1Of2 b)
 
 /// Composes a non-choice type with a choice type.
 let inline (|?>) a b = lift2 (fun z _ -> z) (Choice1Of2 a) b

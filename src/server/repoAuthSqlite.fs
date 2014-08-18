@@ -12,6 +12,7 @@ let connString = @"Data Source=D:\Projects\db-wookie\db\drawTeams.db;Version=3"
 [<Literal>]
 let sqlitePath = @"D:\Projects\laughing-wookie\src\libs\system.data.sqlite"
 
+
 // create a type alias with the connection string and database vendor settings
 type sql = SqlDataProvider< 
               ConnectionString = connString,
