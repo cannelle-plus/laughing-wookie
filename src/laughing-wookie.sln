@@ -15,7 +15,9 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "prewookie", "prewookie\prew
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "server", "server\server.fsproj", "{1E6D72A5-5864-45A8-9B65-85115D6ED9F1}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "wookie.tests", "tests\wookie.tests.fsproj", "{2F5086A6-9072-4127-8D3C-0AFD08F9473E}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "wookie.unit.tests", "wookie.unit.tests\wookie.unit.tests.fsproj", "{2F5086A6-9072-4127-8D3C-0AFD08F9473E}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "wookie.integration.tests", "wookie.integration.tests\wookie.integration.tests.fsproj", "{3113EAC9-24CB-4ABA-A83E-9007149088D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,6 +50,12 @@ Global
 		{2F5086A6-9072-4127-8D3C-0AFD08F9473E}.Mono|Any CPU.Build.0 = Mono|Any CPU
 		{2F5086A6-9072-4127-8D3C-0AFD08F9473E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F5086A6-9072-4127-8D3C-0AFD08F9473E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3113EAC9-24CB-4ABA-A83E-9007149088D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3113EAC9-24CB-4ABA-A83E-9007149088D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3113EAC9-24CB-4ABA-A83E-9007149088D8}.Mono|Any CPU.ActiveCfg = Release|Any CPU
+		{3113EAC9-24CB-4ABA-A83E-9007149088D8}.Mono|Any CPU.Build.0 = Release|Any CPU
+		{3113EAC9-24CB-4ABA-A83E-9007149088D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3113EAC9-24CB-4ABA-A83E-9007149088D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

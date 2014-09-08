@@ -71,6 +71,7 @@
     <Compile Include="repoAuthSqlite.fs" />
     <Compile Include="handler.fs" />
     <Compile Include="WookieServer.fs" />
+    <Compile Include="Reactors.fs" />
     <Compile Include="Program.fs" />
     <None Include="App.config" />
     <None Include="x86\SQLite.Interop.dll">
@@ -98,6 +99,7 @@
       <HintPath>..\libs\getEventStore 3.0.0 rc2\protobuf-net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.SQLite">
@@ -117,6 +119,22 @@
       <Name>wookie</Name>
       <Project>E8676849-2ADC-4875-97F6-53A22964AA79</Project>
     </ProjectReference>
+    <Reference Include="System.Reactive.Core">
+      <HintPath>..\packages\Rx-Core.2.2.5\lib\net45\System.Reactive.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces">
+      <HintPath>..\packages\Rx-Interfaces.2.2.5\lib\net45\System.Reactive.Interfaces.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Reactive.Linq">
+      <HintPath>..\packages\Rx-Linq.2.2.5\lib\net45\System.Reactive.Linq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Reactive.PlatformServices">
+      <HintPath>..\packages\Rx-PlatformServices.2.2.5\lib\net45\System.Reactive.PlatformServices.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

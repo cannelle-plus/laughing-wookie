@@ -7,12 +7,7 @@ open System.Text
 open System.IO
 open System
 
-
-let host = "http://localhost:8081/"
-let siteRoot = @"C:\Mes documents\Visual Studio 2008\Projects\Drive\SiteWeb\"
- 
-
-let listener (handler:(HttpListenerRequest->HttpListenerResponse->Async<unit>)) =
+let listener host (handler:(HttpListenerRequest->HttpListenerResponse->Async<unit>)) =
     let hl = new HttpListener()
     hl.Prefixes.Add host
     hl.Start()
@@ -35,14 +30,18 @@ let getCommandName (request:HttpListenerRequest) =
     let urlFragments = request.Url.PathAndQuery.Split('/')
     match urlFragments with
         | [||] -> "welcome home"
-        | [|rrrr;controller;action|] -> action + controller
-        | [|rrrr;action|] -> action
+        | [|rrrr;aggregate|] -> aggregate
         | _ -> "unknown"
 
-let start =
-    listener (fun req resp ->
+let start  host eventStoreConnection user =
+    let agents = handler.Agents.Initial
+    listener host (fun req resp ->
         async {
-            let value = handler.handle  (getData req) (getCommandName req) 
+            let eventStore  = EventStore.makeRepository eventStoreConnection Serialization.serializer user
+            let postedMessage = getData     req
+            let aggregate = getCommandName req
+ 
+            let value = handler.handle agents eventStore postedMessage aggregate
 
             let txtBytes = Encoding.ASCII.GetBytes(value)
             resp.ContentType <- "text/html"

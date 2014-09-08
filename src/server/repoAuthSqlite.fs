@@ -6,22 +6,34 @@ open System.Configuration
 open System.Linq
 open FSharp.Data.Sql
 
-
+#if CI
+[<Literal>]
+let connString = @"Data Source=D:\TeamCity\buildAgent\work\e5447c2f206dcd6c\src\database\drawTeams.db;Version=3"
+[<Literal>]
+let sqlitePath = @"D:\TeamCity\buildAgent\work\e5447c2f206dcd6c\src\libs\system.data.sqlite"
+#else
+    #if PROD
 [<Literal>]
 let connString = @"Data Source=D:\Projects\db-wookie\db\drawTeams.db;Version=3"
 [<Literal>]
 let sqlitePath = @"D:\Projects\laughing-wookie\src\libs\system.data.sqlite"
-
+    #else
+[<Literal>]
+let connString = @"Data Source=D:\Projects\db-wookie\db\drawTeams.db;Version=3"
+[<Literal>]
+let sqlitePath = @"D:\Projects\laughing-wookie\src\libs\system.data.sqlite"
+    #endif
+#endif
 
 // create a type alias with the connection string and database vendor settings
-type sql = SqlDataProvider< 
+type sql = SqlDataProvider<
               ConnectionString = connString,
               DatabaseVendor = Common.DatabaseProviderTypes.SQLITE,
               ResolutionPath = sqlitePath,
               IndividualsAmount = 1000,
               UseOptionTypes = true >
 
-
+              
 let ctx = sql.GetDataContext()
 
 
