@@ -72,6 +72,7 @@ let agentPlayer eventStore = MailboxProcessor<postingCommand<Message.Command<Pla
                 let! messageReceived = inbox.Receive();
                 match messageReceived with 
                 | postingCommand.WithReply(msg,replyChannel) -> 
+                    Console.WriteLine("Agent handling players")
                     let result = CommandHandler.handlePlayers eventStore (msg.Id, msg.Version) msg.PayLoad
                     replyChannel.Reply(result)
                 | postingCommand.NoReply(msg) -> CommandHandler.handlePlayers eventStore (msg.Id, msg.Version) msg.PayLoad |> ignore
@@ -85,7 +86,8 @@ let agentGame eventStore = MailboxProcessor<postingCommand<Message.Command<Game.
         async {
                 let! messageReceived = inbox.Receive();
                 match messageReceived with 
-                | postingCommand.WithReply(msg,replyChannel) -> 
+                | postingCommand.WithReply(msg,replyChannel) ->
+                    Console.WriteLine("Agent handling games") 
                     let result = CommandHandler.handleGames eventStore (msg.Id, msg.Version) msg.PayLoad
                     replyChannel.Reply(result)
                 | postingCommand.NoReply(msg) -> CommandHandler.handleGames eventStore (msg.Id, msg.Version) msg.PayLoad |> ignore
@@ -107,23 +109,30 @@ let handle agents eventStore  message  action =
     
     match action with
     | AuthenticationAction  -> 
+        Console.WriteLine("Authentication")
         let msg = message |> deserialize<Authentication.Commands>
         let result =agentAuth.PostAndReply(fun replyChannel -> postingMessage.WithReply( msg,replyChannel))
         match result with 
         | Choice1Of2 o -> "OK"
         | Choice2Of2 o-> "KO"
     | PlayerAction ->
+        Console.WriteLine("Player")
         let msg = message |> deserialize<Player.Commands>
         if not(agents.Players.ContainsKey(msg.Id)) then
+            Console.WriteLine("creating Agent")
             agents.Players.[msg.Id] <- agentPlayer eventStore
+            Console.WriteLine("Agent created")
         let result = agents.Players.[msg.Id].PostAndReply(fun replyChannel -> postingCommand.WithReply( msg,replyChannel))
         match result with 
         | Choice1Of2 o -> "OK"
         | Choice2Of2 o-> "KO"
     | GameAction  -> 
+        Console.WriteLine("Game")
         let msg = message |> deserialize<Game.Commands>
         if not(agents.Games.ContainsKey(msg.Id)) then
+            Console.WriteLine("creating Agent")
             agents.Games.[msg.Id] <- agentGame eventStore
+            Console.WriteLine("Agent created")
         let result = agents.Games.[msg.Id].PostAndReply(fun replyChannel -> postingCommand.WithReply( msg,replyChannel))
         match result with 
         | Choice1Of2 o -> "OK"

@@ -14,9 +14,9 @@ let sqlitePath = @"D:\TeamCity\buildAgent\work\e5447c2f206dcd6c\src\libs\system.
 #else
     #if PROD
 [<Literal>]
-let connString = @"Data Source=/media/yoann/data/projects/db-wookie/db/drawTeams.db;Version=3"
+let connString = @"Data Source=D:\Projects\db-wookie\db\drawTeams.db;Version=3"
 [<Literal>]
-let sqlitePath = @"/usr/local/lib/mono/gac/Mono.Data.Sqlite/4.0.0.0__0738eb9f132ed756"
+let sqlitePath = @"D:\Projects\laughing-wookie\src\libs\system.data.sqlite"
     #else
 [<Literal>]
 let connString = @"Data Source=D:\Projects\db-wookie\db\drawTeams.db;Version=3"
@@ -36,19 +36,20 @@ type sql = SqlDataProvider<
               
 let ctx = sql.GetDataContext()
 
+
 let repo =
     let isLoggedIn tokenId = 
-        let result = query { for c in ctx.``[MAIN].[SESSION]`` do
-                             where ( c.TOKENID = tokenId )
-                             select (c.EXPIRATIONDATE,c.USERNAME)
+        let result = query { for c in ctx.``[main].[Session]`` do
+                             where ( c.tokenId = tokenId )
+                             select (c.expirationDate,c.userName)
                              exactlyOneOrDefault
                             }  
         if (box result = null) then None
         else Some(DateTime.Parse(fst(result)),snd(result))
           
     let login ((username,password):string*string) = 
-        let tokenid,expirationDate = query { for c in ctx.``[MAIN].[AUTHENTICATION]`` do
-                                             where ( c.USERNAME = username && c.PASSWORD = password )
+        let tokenid,expirationDate = query { for c in ctx.``[main].[Authentication]`` do
+                                             where ( c.username = username && c.password = password )
                                              select (Guid.NewGuid(), DateTime.Now.AddMinutes(20.0))
                                              exactlyOneOrDefault
                                            }  
@@ -58,10 +59,10 @@ let repo =
         else Some(tokenid,expirationDate)
 
     let saveSession username (tokenid:Guid) (expirationDate:DateTime) =
-        let session = ctx.``[MAIN].[SESSION]``.Create()
-        session.TOKENID <- tokenid.ToString()
-        session.EXPIRATIONDATE <-expirationDate.ToLongTimeString()
-        session.USERNAME <- username
+        let session = ctx.``[main].[Session]``.Create()
+        session.tokenId <- tokenid.ToString()
+        session.expirationDate <-expirationDate.ToLongTimeString()
+        session.userName <- username
 
         ctx.SubmitUpdates()
 

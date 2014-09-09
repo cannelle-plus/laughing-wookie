@@ -87,8 +87,7 @@
       <HintPath>..\libs\getEventStore 3.0.0 rc2\EventStore.ClientAPI.dll</HintPath>
     </Reference>
     <Reference Include="FSharp.Data.SqlProvider">
-      <HintPath>..\packages\SQLProvider.0.0.9-alpha\lib\net40\FSharp.Data.SqlProvider.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\..\..\projects\laughing-wookie\src\libs\SqlDataProvider\FSharp.Data.SqlProvider.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="Newtonsoft.Json">

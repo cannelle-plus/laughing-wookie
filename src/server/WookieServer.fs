@@ -40,8 +40,15 @@ let start  host eventStoreConnection user =
             let eventStore  = EventStore.makeRepository eventStoreConnection Serialization.serializer user
             let postedMessage = getData     req
             let aggregate = getCommandName req
- 
+            Console.WriteLine("-------------------------------------------")
+            Console.WriteLine("date :" + DateTime.Now.ToLongTimeString())
+            Console.WriteLine("aggregate :" + aggregate)
+            Console.WriteLine("postedMessage :" + postedMessage)
+
             let value = handler.handle agents eventStore postedMessage aggregate
+
+            Console.WriteLine("response :" + value)
+            Console.WriteLine("-------------------------------------------")
 
             let txtBytes = Encoding.ASCII.GetBytes(value)
             resp.ContentType <- "text/html"
