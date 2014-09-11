@@ -20,11 +20,11 @@ let listener host (handler:(HttpListenerRequest->HttpListenerResponse->Async<uni
 
 let json = "{\"Id\":\"88085239-6f0f-48c6-b73d-017333cb99bb\",\"Version\":0,\"CorrelationId\":\"88085239-6f0f-48c6-b73d-017333cb99bc\",\"TokenId\":\"88085239-6f0f-48c6-b73d-017333cb99ba\",\"PayLoad\":{\"Case\":\"CreateGame\",\"Fields\": [\"88085239-6f0f-48c6-b73d-017333cb99bb\",\"2014-12-31T10:00:00\",\"Toulouse\"]}}"
 
-let getData (request:HttpListenerRequest) = json
-//    if request.HasEntityBody then
-//        let reader = new System.IO.StreamReader(request.InputStream, request.ContentEncoding)
-//        reader.ReadToEnd()
-//    else ""
+let getData (request:HttpListenerRequest) = 
+    if request.HasEntityBody then
+        let reader = new System.IO.StreamReader(request.InputStream, request.ContentEncoding)
+        reader.ReadToEnd()
+    else ""
 
 let getCommandName (request:HttpListenerRequest) =    
     let urlFragments = request.Url.PathAndQuery.Split('/')

@@ -8,21 +8,14 @@ open FSharp.Data.Sql
 
 #if CI
 [<Literal>]
-let connString = @"Data Source=D:\TeamCity\buildAgent\work\e5447c2f206dcd6c\src\database\drawTeams.db;Version=3"
+let connString = @"Data Source=" + __SOURCE_DIRECTORY__ + "/../../dbRuntime/drawTeams.db;Version=3"
 [<Literal>]
-let sqlitePath = @"D:\TeamCity\buildAgent\work\e5447c2f206dcd6c\src\libs\system.data.sqlite"
+let sqlitePath = __SOURCE_DIRECTORY__ + @"/../libs/system.data.sqlite"
 #else
-    #if PROD
-[<Literal>]
-let connString = @"Data Source=/media/yoann/data/projects/db-wookie/db/drawTeams.db;Version=3"
-[<Literal>]
-let sqlitePath = @"/usr/local/lib/mono/gac/Mono.Data.Sqlite/4.0.0.0__0738eb9f132ed756"
-    #else
 [<Literal>]
 let connString = @"Data Source=D:\Projects\db-wookie\db\drawTeams.db;Version=3"
 [<Literal>]
 let sqlitePath = @"D:\Projects\laughing-wookie\src\libs\system.data.sqlite"
-    #endif
 #endif
 
 // create a type alias with the connection string and database vendor settings
