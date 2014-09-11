@@ -13,3 +13,4 @@ before_install:
 
 script:
  - xbuild src/laughing-wookie.sln.csproj /p:DefineConstants="CI"
+ 
