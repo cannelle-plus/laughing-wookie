@@ -10,12 +10,12 @@ open FSharp.Data.Sql
 [<Literal>]
 let connString = @"Data Source=" + __SOURCE_DIRECTORY__ + "/../../dbRuntime/drawTeams.db;Version=3"
 [<Literal>]
-let sqlitePath = __SOURCE_DIRECTORY__ + @"/../libs/system.data.sqlite"
+let sqlitePath = __SOURCE_DIRECTORY__ + @"/../../libs/system.data.sqlite"
 #else
 [<Literal>]
-let connString = @"Data Source=D:\Projects\db-wookie\db\drawTeams.db;Version=3"
+let connString = @"Data Source=" + __SOURCE_DIRECTORY__ + " \..\..\..\db-wookie\db\drawTeams.db;Version=3"
 [<Literal>]
-let sqlitePath = @"D:\Projects\laughing-wookie\src\libs\system.data.sqlite"
+let sqlitePath = __SOURCE_DIRECTORY__ + @"\..\..\libs\system.data.sqlite"
 #endif
 
 // create a type alias with the connection string and database vendor settings

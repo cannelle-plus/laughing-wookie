@@ -45,8 +45,10 @@ let start  host eventStoreConnection user =
             Console.WriteLine("aggregate :" + aggregate)
             Console.WriteLine("postedMessage :" + postedMessage)
 
-            let value = handler.handle agents eventStore postedMessage aggregate
-
+            let value = match postedMessage with
+                | "" -> "empty message"
+                | message -> handler.handle agents eventStore message aggregate
+            
             Console.WriteLine("response :" + value)
             Console.WriteLine("-------------------------------------------")
 
