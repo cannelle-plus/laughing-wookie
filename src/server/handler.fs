@@ -39,32 +39,12 @@ let (|GameAction|_|)  = function
          ->  Some()
     | _ -> None
 
-let (|AuthenticationAction|_|) = function
-    | InvariantEqual "Authentication" ->  Some()
-//    | InvariantEqual "Login" 
-//    | InvariantEqual "Logout" 
-//    | InvariantEqual "Signin" 
-    | _ -> None
 
 
 let deserialize<'a> message = JsonConvert.DeserializeObject<Message.Command<'a>>(message)    
 
-let handlePlayer eventStore (message:Message.Command<Player.Commands>) = CommandHandler.handlePlayers eventStore (message.Id, message.Version) message.PayLoad
-let handleGame eventStore (message:Message.Command<Game.Commands>) =  CommandHandler.handleGames eventStore (message.Id, message.Version) message.PayLoad
-
-let agentAuth = MailboxProcessor<postingMessage<Message.Command<Authentication.Commands>>>.Start(fun inbox ->
-    let rec loop  =
-        async {
-                let! messageReceived = inbox.Receive();
-                match messageReceived with 
-                | postingMessage.WithReply(msg,replyChannel) -> 
-                    let result = Authentication.handle sqliteConnection.repo msg.PayLoad
-                    replyChannel.Reply(result)
-                | postingMessage.NoReply(msg) -> Authentication.handle sqliteConnection.repo msg.PayLoad |> ignore
-                
-                do! loop
-        }
-    loop )
+let handlePlayer eventStore (message:Message.Command<Player.Commands>) = CommandHandler.handlePlayers eventStore (message.Id, message.Version, message.MetaData) message.PayLoad
+let handleGame eventStore (message:Message.Command<Game.Commands>) =  CommandHandler.handleGames eventStore (message.Id, message.Version, message.MetaData) message.PayLoad
 
 let agentPlayer eventStore = MailboxProcessor<postingCommand<Message.Command<Player.Commands>,Player.Events>>.Start(fun inbox ->
     let rec loop  =
@@ -73,9 +53,9 @@ let agentPlayer eventStore = MailboxProcessor<postingCommand<Message.Command<Pla
                 match messageReceived with 
                 | postingCommand.WithReply(msg,replyChannel) -> 
                     Console.WriteLine("Agent handling players")
-                    let result = CommandHandler.handlePlayers eventStore (msg.Id, msg.Version) msg.PayLoad
+                    let result = CommandHandler.handlePlayers eventStore (msg.Id, msg.Version, msg.MetaData) msg.PayLoad
                     replyChannel.Reply(result)
-                | postingCommand.NoReply(msg) -> CommandHandler.handlePlayers eventStore (msg.Id, msg.Version) msg.PayLoad |> ignore
+                | postingCommand.NoReply(msg) -> CommandHandler.handlePlayers eventStore (msg.Id, msg.Version, msg.MetaData) msg.PayLoad |> ignore
                 
                 do! loop
         }
@@ -88,9 +68,9 @@ let agentGame eventStore = MailboxProcessor<postingCommand<Message.Command<Game.
                 match messageReceived with 
                 | postingCommand.WithReply(msg,replyChannel) ->
                     Console.WriteLine("Agent handling games") 
-                    let result = CommandHandler.handleGames eventStore (msg.Id, msg.Version) msg.PayLoad
+                    let result = CommandHandler.handleGames eventStore (msg.Id, msg.Version, msg.MetaData) msg.PayLoad
                     replyChannel.Reply(result)
-                | postingCommand.NoReply(msg) -> CommandHandler.handleGames eventStore (msg.Id, msg.Version) msg.PayLoad |> ignore
+                | postingCommand.NoReply(msg) -> CommandHandler.handleGames eventStore (msg.Id, msg.Version, msg.MetaData) msg.PayLoad |> ignore
                 
                 do! loop
         }
@@ -108,13 +88,6 @@ with static member Initial = {
 let handle agents eventStore  message  action = 
     
     match action with
-    | AuthenticationAction  -> 
-        Console.WriteLine("Authentication")
-        let msg = message |> deserialize<Authentication.Commands>
-        let result =agentAuth.PostAndReply(fun replyChannel -> postingMessage.WithReply( msg,replyChannel))
-        match result with 
-        | Choice1Of2 o -> "OK"
-        | Choice2Of2 o-> "KO"
     | PlayerAction ->
         Console.WriteLine("Player")
         let msg = message |> deserialize<Player.Commands>

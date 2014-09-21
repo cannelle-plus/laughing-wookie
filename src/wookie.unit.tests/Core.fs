@@ -28,13 +28,12 @@ exception AggregateException of string
 let Given evts = 
     makeEventRepo (seq { for evt in evts do yield (evt:>obj) })
 
-let execThe handle  (id,version) cmd eventStore=   
+let execThe handle  (id,version,metadata) cmd eventStore=   
     let msg =  
         {
             Command.Id =  id
             Version = version;
-            CorrelationId = Guid.NewGuid();
-            TokenId = Guid.NewGuid();
+            MetaData = metadata
             PayLoad = cmd
         }
     handle eventStore (msg.Id, msg.Version) msg.PayLoad

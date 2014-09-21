@@ -6,28 +6,26 @@ open Core
 open Validator 
 
 type Commands =
-    | CreateGame of Guid*DateTime*string 
-    | JoinGame of Guid
-    | AbandonGame of Guid
+    | CreateGame of string*string*DateTime*string*int
+    | JoinGame 
+    | AbandonGame 
 
 type Events =
-    | GameCreated of Guid*DateTime*string
-    | GameJoined of Guid
-    | GameAbandonned of Guid
-    
+    | GameCreated of string*string*DateTime*string*int
+    | GameJoined 
+    | GameAbandonned 
 
 type State = {
     nbPlayer : int;
-    location : string;
-    date : DateTime;
+    maxPlayer : int;
     isScheduled : bool
 }
-with static member Initial = { nbPlayer = 0; location=""; date=DateTime.Now; isScheduled = false}
+with static member Initial = { nbPlayer = 0; maxPlayer=0; isScheduled = false}
 
 let apply state = function
-    | GameCreated (gameId,  gameDate, gameLocation) -> { state with location = gameLocation ; date = gameDate ; isScheduled = true}
-    | GameJoined (gameId) -> { state with nbPlayer= state.nbPlayer + 1 }
-    | GameAbandonned (gameId) -> { state with nbPlayer= state.nbPlayer - 1  }
+    | GameCreated (name, ownerId,  gameDate, gameLocation,nbPlayersRequired) -> { state with maxPlayer =nbPlayersRequired;  isScheduled = true}
+    | GameJoined  -> { state with nbPlayer= state.nbPlayer + 1 }
+    | GameAbandonned  -> { state with nbPlayer= state.nbPlayer - 1  }
 
 
 module private Assert =
@@ -40,8 +38,8 @@ module private Assert =
 
     
 let exec state = function
-    | CreateGame (gameId,  gameDate, gameLocation) -> Assert.validCreateGame gameLocation gameDate state <?> GameCreated(gameId,   gameDate, gameLocation) 
-    | JoinGame (gameId) -> Assert.validJoinGame state <?> GameJoined(gameId)
-    | AbandonGame (gameId) -> Assert.validAbandonGame state <?> GameAbandonned(gameId)
+    | CreateGame (name, ownerId,  gameDate, gameLocation, nbPlayersRequired) -> Assert.validCreateGame gameLocation gameDate state <?> GameCreated(name , ownerId,   gameDate, gameLocation,nbPlayersRequired) 
+    | JoinGame  -> Assert.validJoinGame state <?> GameJoined
+    | AbandonGame -> Assert.validAbandonGame state <?> GameAbandonned
     
         

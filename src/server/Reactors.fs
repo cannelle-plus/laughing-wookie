@@ -49,16 +49,16 @@ let subscribe<'a> observer (subject:Subject<ResolvedEvent>)  =
     subject
 
 let reactToGameScheduled  = 
-    let cmd = Game.CreateGame(Guid.NewGuid(),DateTime.Now,"Toulouse")
+    let cmd = Game.CreateGame("nom",Guid.NewGuid().ToString(),DateTime.Now,"Toulouse", 10)
+    let metadata = { UserId="sdfs";UserName="sddsd";CorrelationId = Guid.NewGuid() }
     let message = {
         Id = Guid.NewGuid();
         Version = 0;
-        CorrelationId = Guid.NewGuid();
-        TokenId = Guid.NewGuid();
+        MetaData = metadata
         PayLoad = cmd;
     }
     let eventStore  = EventStore.makeRepository eventStoreConnection Serialization.serializer user
-    let next = Action<ResolvedEvent>(fun e -> CommandHandler.handleGames eventStore (message.Id, message.Version) message.PayLoad|> ignore)
+    let next = Action<ResolvedEvent>(fun e -> CommandHandler.handleGames eventStore (message.Id, message.Version,message.MetaData) message.PayLoad|> ignore)
     Observer.Create(next)
    
 

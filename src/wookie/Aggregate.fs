@@ -3,6 +3,7 @@ module Aggregate
 
 open Core
 open System 
+open Message
 
 type Aggregate<'TState, 'TCommand,'TEvent> = {
     initial : 'TState;
@@ -15,8 +16,8 @@ type Aggregate<'TState, 'TCommand,'TEvent> = {
 type Id = System.Guid
 
 /// Creates a persistent command handler for an aggregate.
-let makeHandler (aggregate:Aggregate<'TState, 'TCommand, 'TEvent>) (load:System.Type * Id -> obj seq, commit:Id * int -> obj -> unit) =
-    fun (id,version) command -> 
+let makeHandler (aggregate:Aggregate<'TState, 'TCommand, 'TEvent>) (load:System.Type * Id -> obj seq, commit:Id * int * Metadata -> obj -> unit) =
+    fun (id,version,metadata) command -> 
         Console.WriteLine("loading Events") 
         let events = load (typeof<'TEvent>,id)
         Console.WriteLine("applying Events") 
@@ -26,7 +27,7 @@ let makeHandler (aggregate:Aggregate<'TState, 'TCommand, 'TEvent>) (load:System.
         match value with
         | Choice1Of2 event -> Console.WriteLine("committing events") 
                               event 
-                              |> commit (id,version) |> ignore
+                              |> commit (id,version,metadata) |> ignore
                               Choice1Of2  event 
         | Choice2Of2 messages ->
                                 Console.WriteLine("returning error message")   

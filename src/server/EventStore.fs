@@ -26,10 +26,10 @@ let makeRepository (conn:IEventStoreConnection)  (serialize:obj -> string * byte
         eventsSlice.Events 
         |> Seq.map (fun e -> deserialize(t, e.Event.EventType, e.Event.Data))
 
-    let commit (id,expectedVersion) e = 
+    let commit (id,expectedVersion,metadata) e = 
         let streamId = streamId id
         let eventType,data = serialize e
-        let metaData = [||] : byte array
+        let metaDataType,metaData = serialize metadata
         let eventData = new EventData(Guid.NewGuid(), eventType, true, data, metaData)
         
         conn.AppendToStream(streamId, ExpectedVersion.Any, eventData)  |> ignore

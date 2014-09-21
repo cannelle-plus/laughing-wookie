@@ -6,7 +6,7 @@ Debug
 obj
 bin
 dbRuntime
-tests
 deploy
 temp
 nuget
+packages

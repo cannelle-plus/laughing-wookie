@@ -105,11 +105,6 @@
       <HintPath>..\..\packages\xunit.1.9.1\lib\net20\xunit.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <ProjectReference Include="..\prewookie\prewookie.fsproj">
-      <Name>prewookie</Name>
-      <Project>{129ac594-46e1-4802-92c5-b3d138ec8135}</Project>
-      <Private>True</Private>
-    </ProjectReference>
     <ProjectReference Include="..\server\server.fsproj">
       <Name>server</Name>
       <Project>{1e6d72a5-5864-45a8-9b65-85115d6ed9f1}</Project>
