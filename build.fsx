@@ -12,7 +12,7 @@ let product = "laughing-wookie"
 
 let mode = getBuildParamOrDefault "mode" "Debug"
 
-let appToDeploy = "src/server/bin/release"
+let appToDeploy = "src/server/bin/Release"
 let deployDir = "./deploy/"
 
 
