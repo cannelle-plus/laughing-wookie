@@ -133,7 +133,7 @@ Target "RunTests" (fun _ ->
     !! testAssemblies
     |> xUnit (fun p ->
         { p with
-            ToolPath = "tools/xUnit 1.9.1/xunit.console.clr4.exe"
+            ToolPath = __SOURCE_DIRECTORY__ @@ "/tools/xUnit-1.9.1/xunit.console.clr4.exe"
             ShadowCopy = false
             TimeOut = TimeSpan.FromMinutes 20.
             NUnitXmlOutput =true })
