@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>1E6D72A5-5864-45A8-9B65-85115D6ED9F1</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Server</RootNamespace>
-    <AssemblyName>Server</AssemblyName>
+    <RootNamespace>server</RootNamespace>
+    <AssemblyName>server</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFSharpCoreVersion>4.3.1.0</TargetFSharpCoreVersion>
@@ -24,7 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <DocumentationFile>bin\Debug\Server.XML</DocumentationFile>
+    <DocumentationFile>bin\Debug\server.XML</DocumentationFile>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -35,7 +35,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <DocumentationFile>bin\Release\Server.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\server.XML</DocumentationFile>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
@@ -48,7 +48,7 @@
     <DefineConstants>TRACE;Mono</DefineConstants>
     <WarningLevel>3</WarningLevel>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <DocumentationFile>bin\Release\Server.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\server.XML</DocumentationFile>
     <Prefer32Bit>true</Prefer32Bit>
     <OutputPath>bin\Mono\</OutputPath>
   </PropertyGroup>
@@ -63,7 +63,7 @@
     <Compile Include="Serialization.fs" />
     <Compile Include="EventStore.fs" />
     <Compile Include="handler.fs" />
-    <Compile Include="WookieServer.fs" />
+    <Compile Include="Wookieserver.fs" />
     <Compile Include="Reactors.fs" />
     <Compile Include="Program.fs" />
     <None Include="App.config" />
@@ -77,10 +77,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="EventStore.ClientAPI">
-      <HintPath>..\..\libs\getEventStore 3.0.0 rc2\EventStore.ClientAPI.dll</HintPath>
-    </Reference>
-    <Reference Include="FSharp.Data.SqlProvider">
-      <HintPath>..\..\libs\SqlDataProvider\FSharp.Data.SqlProvider.dll</HintPath>
+      <HintPath>..\..\lib\getEventStore 3.0.0 rc2\EventStore.ClientAPI.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="Newtonsoft.Json">
@@ -88,7 +85,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="protobuf-net">
-      <HintPath>..\..\libs\getEventStore 3.0.0 rc2\protobuf-net.dll</HintPath>
+      <HintPath>..\..\lib\getEventStore 3.0.0 rc2\protobuf-net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
