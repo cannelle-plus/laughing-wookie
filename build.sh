@@ -1,14 +1,15 @@
 #!/bin/bash
-if [ ! -f packages/FAKE/tools/FAKE.exe ]; then
+if test "$OS" = "Windows_NT"
+then
+  # use .Net
+  .nuget/NuGet.exe install FAKE -OutputDirectory packages -ExcludeVersion
+  .nuget/NuGet.exe install SourceLink.Fake -OutputDirectory packages -ExcludeVersion
+  [ ! -e build.fsx ] && packages/FAKE/tools/FAKE.exe init.fsx
+  packages/FAKE/tools/FAKE.exe build.fsx $@
+else
+  # use mono
   mono .nuget/NuGet.exe install FAKE -OutputDirectory packages -ExcludeVersion
+  mono .nuget/NuGet.exe install SourceLink.Fake -OutputDirectory packages -ExcludeVersion
+  [ ! -e build.fsx ] && mono packages/FAKE/tools/FAKE.exe init.fsx
+  mono packages/FAKE/tools/FAKE.exe $@ --fsiargs -d:MONO build.fsx
 fi
-#workaround assembly resolution issues in build.fsx
-export FSHARPI=`which fsharpi`
-cat - > fsharpi <<"EOF"
-#!/bin/bash
-libdir=$PWD/packages/FAKE/tools/
-$FSHARPI --lib:$libdir $@
-EOF
-chmod +x fsharpi
-mono packages/FAKE/tools/FAKE.exe build.fsx $@
-rm fsharpi

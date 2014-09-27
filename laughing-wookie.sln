@@ -1,20 +1,43 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "wookie", "src\wookie\wookie.fsproj", "{E8676849-2ADC-4875-97F6-53A22964AA79}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solutions Items", "Solutions Items", "{F1CB0289-008C-4C9D-A5B8-2D2B71D6E5E7}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{1F1B4F0F-2998-4D74-865B-9122611C2B14}"
 	ProjectSection(SolutionItems) = preProject
-		build.cmd = build.cmd
-		build.fsx = build.fsx
-		build.sh = build.sh
-		LICENSE.md = LICENSE.md
-		README.md = README.md
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{A6A6AF7D-D6E3-442D-9B1E-58CC91879BE1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "project", "project", "{BF60BC93-E09B-4E5F-9D85-95A519479D54}"
+	ProjectSection(SolutionItems) = preProject
+		build.fsx = build.fsx
+		nuget\laughing-wookie.nuspec = nuget\laughing-wookie.nuspec
+		README.md = README.md
+		RELEASE_NOTES.md = RELEASE_NOTES.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{83F16175-43B1-4C90-A1EE-8E351C33435D}"
+	ProjectSection(SolutionItems) = preProject
+		docs\tools\generate.fsx = docs\tools\generate.fsx
+		docs\tools\templates\template.cshtml = docs\tools\templates\template.cshtml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "content", "content", "{8E6D5255-776D-4B61-85F9-73C37AA1FB9A}"
+	ProjectSection(SolutionItems) = preProject
+		docs\content\index.fsx = docs\content\index.fsx
+		docs\content\tutorial.fsx = docs\content\tutorial.fsx
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{ED8079DD-2B06-4030-9F0F-DC548F98E1C4}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "wookie", "src\wookie\wookie.fsproj", "{E8676849-2ADC-4875-97F6-53A22964AA79}"
+EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "server", "src\server\server.fsproj", "{1E6D72A5-5864-45A8-9B65-85115D6ED9F1}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "wookie.unit.tests", "tests\wookie.unit.tests\wookie.unit.tests.fsproj", "{2F5086A6-9072-4127-8D3C-0AFD08F9473E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,8 +58,19 @@ Global
 		{1E6D72A5-5864-45A8-9B65-85115D6ED9F1}.Mono|Any CPU.Build.0 = Mono|Any CPU
 		{1E6D72A5-5864-45A8-9B65-85115D6ED9F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E6D72A5-5864-45A8-9B65-85115D6ED9F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F5086A6-9072-4127-8D3C-0AFD08F9473E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F5086A6-9072-4127-8D3C-0AFD08F9473E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F5086A6-9072-4127-8D3C-0AFD08F9473E}.Mono|Any CPU.ActiveCfg = Mono|Any CPU
+		{2F5086A6-9072-4127-8D3C-0AFD08F9473E}.Mono|Any CPU.Build.0 = Mono|Any CPU
+		{2F5086A6-9072-4127-8D3C-0AFD08F9473E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F5086A6-9072-4127-8D3C-0AFD08F9473E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{83F16175-43B1-4C90-A1EE-8E351C33435D} = {A6A6AF7D-D6E3-442D-9B1E-58CC91879BE1}
+		{8E6D5255-776D-4B61-85F9-73C37AA1FB9A} = {A6A6AF7D-D6E3-442D-9B1E-58CC91879BE1}
+		{2F5086A6-9072-4127-8D3C-0AFD08F9473E} = {ED8079DD-2B06-4030-9F0F-DC548F98E1C4}
 	EndGlobalSection
 EndGlobal
