@@ -7,17 +7,22 @@ open Reactors
 open Player
 open EventStore.ClientAPI.SystemData
 open Newtonsoft.Json
+open System.Configuration
 
 open Message
 
 
-let port = "8081"
-let domain = "localhost" 
+let port = ConfigurationManager.AppSettings.["Port"]
+let domain = ConfigurationManager.AppSettings.["Host"]
+
+let eventStoreHost =ConfigurationManager.AppSettings.["EventStoreHost"]
+let eventStoreTCPPort = System.Int32.Parse( ConfigurationManager.AppSettings.["EventStoreTCPPort"])
+let eventStoreHttpPort = System.Int32.Parse(ConfigurationManager.AppSettings.["EventStoreHttpPort"])
+
 let host = "http://" + domain + ":" + port + "/"
 
-
-let endPoint = new System.Net.IPEndPoint(System.Net.IPAddress.Parse("127.0.0.1"), 1113)
-let endPointHttp = new System.Net.IPEndPoint(System.Net.IPAddress.Parse("127.0.0.1"), 2113)
+let endPoint = new System.Net.IPEndPoint(System.Net.IPAddress.Parse(eventStoreHost), eventStoreTCPPort)
+let endPointHttp = new System.Net.IPEndPoint(System.Net.IPAddress.Parse(eventStoreHost), eventStoreHttpPort)
 
 let eventStoreConnection = EventStore.conn endPoint
 let user = UserCredentials("admin","changeit")
