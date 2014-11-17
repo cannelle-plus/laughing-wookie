@@ -18,7 +18,7 @@ let listener host (handler:(HttpListenerRequest->HttpListenerResponse->Async<uni
             Async.Start(handler context.Request context.Response)
     } |> Async.Start
 
-//let json = "{\"Id\":\"88085239-6f0f-48c6-b73d-017333cb99bb\",\"Version\":0,\"CorrelationId\":\"88085239-6f0f-48c6-b73d-017333cb99bc\",\"TokenId\":\"88085239-6f0f-48c6-b73d-017333cb99ba\",\"PayLoad\":{\"Case\":\"CreateGame\",\"Fields\": [\"88085239-6f0f-48c6-b73d-017333cb99bb\",\"2014-12-31T10:00:00\",\"Toulouse\"]}}"
+//let json = "{\"Id\":\"88085239-6f0f-48c6-b73d-017333cb99bb\",\"Version\":0,\"CorrelationId\":\"88085239-6f0f-48c6-b73d-017333cb99bc\",\"TokenId\":\"88085239-6f0f-48c6-b73d-017333cb99ba\",\"PayLoad\":{\"Case\":\"ScheduleGame\",\"Fields\": [\"88085239-6f0f-48c6-b73d-017333cb99bb\",\"2014-12-31T10:00:00\",\"Toulouse\"]}}"
 
 let getData (request:HttpListenerRequest) = 
     if request.HasEntityBody then

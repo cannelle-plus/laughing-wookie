@@ -21,8 +21,8 @@ type postingCommand<'TCommandMessage,'TEvent> =
     | WithReply of 'TCommandMessage * AsyncReplyChannel<Choice<'TEvent,string list>>
     | NoReply of 'TCommandMessage
 
-let (|PlayerAction|_|)  = function
-    | InvariantEqual "Player" ->
+let (|BearAction|_|)  = function
+    | InvariantEqual "Bear" ->
 //    | InvariantEqual "Join" 
 //    | InvariantEqual "ScheduleGame" 
 //    | InvariantEqual "JoinGame" 
@@ -34,7 +34,7 @@ let (|PlayerAction|_|)  = function
 let (|GameAction|_|)  = function
     | InvariantEqual "Game" 
 //    | InvariantEqual "JoinGame" 
-//    | InvariantEqual "CreateGame" 
+//    | InvariantEqual "ScheduleGame" 
 //    | InvariantEqual "AbandonGame" 
          ->  Some()
     | _ -> None
@@ -43,19 +43,19 @@ let (|GameAction|_|)  = function
 
 let deserialize<'a> message = JsonConvert.DeserializeObject<Message.Command<'a>>(message)    
 
-let handlePlayer eventStore (message:Message.Command<Player.Commands>) = CommandHandler.handlePlayers eventStore (message.Id, message.Version, message.MetaData) message.PayLoad
+let handleBear eventStore (message:Message.Command<Bear.Commands>) = CommandHandler.handleBears eventStore (message.Id, message.Version, message.MetaData) message.PayLoad
 let handleGame eventStore (message:Message.Command<Game.Commands>) =  CommandHandler.handleGames eventStore (message.Id, message.Version, message.MetaData) message.PayLoad
 
-let agentPlayer eventStore = MailboxProcessor<postingCommand<Message.Command<Player.Commands>,Player.Events>>.Start(fun inbox ->
+let agentBear eventStore = MailboxProcessor<postingCommand<Message.Command<Bear.Commands>,Bear.Events>>.Start(fun inbox ->
     let rec loop  =
         async {
                 let! messageReceived = inbox.Receive();
                 match messageReceived with 
                 | postingCommand.WithReply(msg,replyChannel) -> 
-                    Console.WriteLine("Agent handling players")
-                    let result = CommandHandler.handlePlayers eventStore (msg.Id, msg.Version, msg.MetaData) msg.PayLoad
+                    Console.WriteLine("Agent handling Bears")
+                    let result = CommandHandler.handleBears eventStore (msg.Id, msg.Version, msg.MetaData) msg.PayLoad
                     replyChannel.Reply(result)
-                | postingCommand.NoReply(msg) -> CommandHandler.handlePlayers eventStore (msg.Id, msg.Version, msg.MetaData) msg.PayLoad |> ignore
+                | postingCommand.NoReply(msg) -> CommandHandler.handleBears eventStore (msg.Id, msg.Version, msg.MetaData) msg.PayLoad |> ignore
                 
                 do! loop
         }
@@ -77,25 +77,25 @@ let agentGame eventStore = MailboxProcessor<postingCommand<Message.Command<Game.
     loop )
 
 type Agents = {
-    Players : System.Collections.Generic.Dictionary<Guid,MailboxProcessor<postingCommand<Message.Command<Player.Commands>,Player.Events>>>;
+    Bears : System.Collections.Generic.Dictionary<Guid,MailboxProcessor<postingCommand<Message.Command<Bear.Commands>,Bear.Events>>>;
     Games : System.Collections.Generic.Dictionary<Guid,MailboxProcessor<postingCommand<Message.Command<Game.Commands>,Game.Events>>>;
 }
 with static member Initial = { 
-                                 Players = new System.Collections.Generic.Dictionary<Guid,MailboxProcessor<postingCommand<Message.Command<Player.Commands>,Player.Events>>>();
+                                 Bears = new System.Collections.Generic.Dictionary<Guid,MailboxProcessor<postingCommand<Message.Command<Bear.Commands>,Bear.Events>>>();
                                  Games = new System.Collections.Generic.Dictionary<Guid,MailboxProcessor<postingCommand<Message.Command<Game.Commands>,Game.Events>>>();
                              }
 
 let handle agents eventStore  message  action = 
     
     match action with
-    | PlayerAction ->
-        Console.WriteLine("Player")
-        let msg = message |> deserialize<Player.Commands>
-        if not(agents.Players.ContainsKey(msg.Id)) then
+    | BearAction ->
+        Console.WriteLine("Bear")
+        let msg = message |> deserialize<Bear.Commands>
+        if not(agents.Bears.ContainsKey(msg.Id)) then
             Console.WriteLine("creating Agent")
-            agents.Players.[msg.Id] <- agentPlayer eventStore
-            Console.WriteLine("Agent created")
-        let result = agents.Players.[msg.Id].PostAndReply(fun replyChannel -> postingCommand.WithReply( msg,replyChannel))
+            agents.Bears.[msg.Id] <- agentBear eventStore
+            Console.WriteLine("Agent scheduled")
+        let result = agents.Bears.[msg.Id].PostAndReply(fun replyChannel -> postingCommand.WithReply( msg,replyChannel))
         match result with 
         | Choice1Of2 o -> "OK"
         | Choice2Of2 o-> "KO"
@@ -105,7 +105,7 @@ let handle agents eventStore  message  action =
         if not(agents.Games.ContainsKey(msg.Id)) then
             Console.WriteLine("creating Agent")
             agents.Games.[msg.Id] <- agentGame eventStore
-            Console.WriteLine("Agent created")
+            Console.WriteLine("Agent scheduled")
         let result = agents.Games.[msg.Id].PostAndReply(fun replyChannel -> postingCommand.WithReply( msg,replyChannel))
         match result with 
         | Choice1Of2 o -> "OK"

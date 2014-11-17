@@ -34,11 +34,11 @@
 ////
 //
 //[<Xunit.Fact>]
-//let createGame() =      
+//let ScheduleGame() =      
 //    let server = WookieServer.start    
 //    Console.ReadKey(true) |> ignore
 ////    let version = 0
-////    Game.CreateGame(Guid.NewGuid(), DateTime.Now.AddHours(26.0),"Toulouse") 
+////    Game.ScheduleGame(Guid.NewGuid(), DateTime.Now.AddHours(26.0),"Toulouse") 
 ////    |> handleCommand (gameId,version) 
 //
 //
@@ -48,12 +48,12 @@
 ////    Game.JoinGame(gameId,"totoDu31") |> handleCommand (gameId,version)    
 ////
 ////[<Xunit.Fact>]
-////let joinGameSecondPlayer() =     
+////let joinGameSecondBear() =     
 ////    let version = 2
 ////    Game.JoinGame(gameId,"tataDu31") |> handleCommand (gameId,version)    
 ////
 ////[<Xunit.Fact>]
-////let joinGameThirdPlayer() =     
+////let joinGameThirdBear() =     
 ////    let version = 3
 ////    Game.JoinGame(gameId,"titiDu31") |> handleCommand (gameId,version)    
 ////
@@ -99,9 +99,9 @@
 //
 //
 //    [<Xunit.Fact>]
-//    let ``Given nothing happened yet, when we create a game, a game is created``  () = 
+//    let ``Given nothing happened yet, when we create a game, a game is scheduled``  () = 
 //        let version = 0
-//        Game.CreateGame(Guid.NewGuid(), DateTime.Now.AddHours(26.0),"Toulouse") 
+//        Game.ScheduleGame(Guid.NewGuid(), DateTime.Now.AddHours(26.0),"Toulouse") 
 //        |> makeJson (gameId,version) 
 //
 //    interface System.ID  isposable with 

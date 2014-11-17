@@ -91,7 +91,7 @@ After initialization, you can
       <td><a href="../../tree/master/docs/output">docs/output</a></td>
       <td>
         <p>Contains the final artifacts for both narrative and API documentation. 
-        This folder will be automatically created by the documenation generation process.</p>
+        This folder will be automatically scheduled by the documenation generation process.</p>
         <p>Do not put anything else in this directory.</p>
         <p>Do not commit this directory to source control.</p>
       </td>

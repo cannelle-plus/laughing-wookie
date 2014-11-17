@@ -46,19 +46,19 @@
     <DocumentationFile>bin\Release\wookie.XML</DocumentationFile>
     <OutputPath>bin\Mono\</OutputPath>
   </PropertyGroup>
-	<PropertyGroup>
- <FSharpTargetsPath>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\FSharp\Microsoft.FSharp.Targets</FSharpTargetsPath>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(VisualStudioVersion)' == '11.0' Or $(OS) != 'Windows_NT'">
-		   <FSharpTargetsPath>$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets</FSharpTargetsPath>
- </PropertyGroup>
+  <PropertyGroup>
+    <FSharpTargetsPath>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\FSharp\Microsoft.FSharp.Targets</FSharpTargetsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(VisualStudioVersion)' == '11.0' Or $(OS) != 'Windows_NT'">
+    <FSharpTargetsPath>$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets</FSharpTargetsPath>
+  </PropertyGroup>
   <Import Project="$(FSharpTargetsPath)" />
   <ItemGroup>
     <Compile Include="message.fs" />
     <Compile Include="Core.fs" />
     <Compile Include="Aggregate.fs" />
     <Compile Include="Validator.fs" />
-    <Compile Include="Player.fs" />
+    <Compile Include="Bear.fs" />
     <Compile Include="Game.fs" />
     <Compile Include="commandHandler.fs" />
     <Content Include="packages.config" />

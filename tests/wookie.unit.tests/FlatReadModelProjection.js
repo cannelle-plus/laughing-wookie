@@ -9,19 +9,19 @@ fromCategory('Game').foreachStream().when({
             name: null,
             location: null,
             date: null,
-            nbPlayer: 0
+            nbBear: 0
         };
     },
-    "GameCreated": function (s, e) {
+    "GameScheduled": function (s, e) {
         s.name = e.body.value;
           emitReadModel(s, e);
     },
     "GameJoined": function (s, e) {
-        s.nbPlayer += 1;
+        s.nbBear += 1;
         emitReadModel(s, e);
     },
     "GameAbandonned": function (s, e) {
-        s.nbPlayer -= 1;
+        s.nbBear -= 1;
         emitReadModel(s, e);
     }
 });

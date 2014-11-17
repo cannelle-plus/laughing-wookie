@@ -49,7 +49,7 @@ let subscribe<'a> observer (subject:Subject<ResolvedEvent>)  =
     subject
 
 let reactToGameScheduled  = 
-    let cmd = Game.CreateGame("nom",Guid.NewGuid().ToString(),DateTime.Now,"Toulouse", 10)
+    let cmd = Game.ScheduleGame("nom",Guid.NewGuid().ToString(),DateTime.Now,"Toulouse", 10)
     let metadata = { UserId="sdfs";UserName="sddsd";CorrelationId = Guid.NewGuid() }
     let message = {
         Id = Guid.NewGuid();
@@ -65,7 +65,7 @@ let reactToGameScheduled  =
 
 let reactorBootstrap eventStoreConnection user =
     createSubject eventStoreConnection user false
-    |> subscribe<Player.Events>(reactToGameScheduled )
+    |> subscribe<Bear.Events>(reactToGameScheduled )
         
     
 

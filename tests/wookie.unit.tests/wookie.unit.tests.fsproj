@@ -62,7 +62,7 @@
   <ItemGroup>
     <Compile Include="Core.fs" />
     <Compile Include="Game.tests.fs" />
-    <Compile Include="Player.tests.fs" />
+    <Compile Include="Bear.tests.fs" />
     <Content Include="packages.config" />
     <Content Include="app.config" />
     <Compile Include="FsUnitSample.fs" />

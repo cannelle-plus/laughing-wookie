@@ -4,7 +4,7 @@
 #light
 open System
 open Reactors 
-open Player
+open Bear
 open EventStore.ClientAPI.SystemData
 open Newtonsoft.Json
 open System.Configuration
@@ -47,7 +47,7 @@ let main argv =
 //        Id = Guid.NewGuid();
 //        Version= 0;
 //        MetaData = [ metaToken; metaUser; metaUserName]
-//        PayLoad = Game.CreateGame("super nom", Guid.NewGuid(),DateTime.Now.AddDays(12.0),"toulouse",10)
+//        PayLoad = Game.ScheduleGame("super nom", Guid.NewGuid(),DateTime.Now.AddDays(12.0),"toulouse",10)
 //
 //    }
 //
