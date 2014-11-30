@@ -37,11 +37,11 @@ let apply state = function
 open Validator 
 
 module private Assert =
-    let validSignIn Bear username = validator (fun p -> not p.hasJoined && not(String.IsNullOrEmpty(username)) ) ["Bear has already joined the community"] Bear 
-    let validCancelGame Bear gameId = validator (fun (p,id) -> List.exists ((=)id) p.gamesCreated) ["this Bear cannot cancel this game"] (Bear,gameId)
+    let validSignIn bear username = validator (fun p -> not p.hasJoined && not(String.IsNullOrEmpty(username)) ) ["Bear has already joined the community"] bear 
+    let validCancelGame bear gameId = validator (fun (p,id) -> List.exists ((=)id) p.gamesCreated) ["this Bear cannot cancel this game"] (bear,gameId)
 
 let exec state = function
-    | SignIn (username,avatarId)-> Assert.validSignIn state username <?>  SignedIn(username,avatarId) 
+    | SignIn (bearName,avatarId)-> Assert.validSignIn state bearName <?>  SignedIn(bearName,avatarId) 
     | ScheduleGame (gameId,  gameDate, gameLocation) -> Choice1Of2  ( GameScheduled(gameId,   gameDate, gameLocation))
     | JoinGame gameId -> Choice1Of2(GameJoined(gameId))
     | LeaveGame gameId -> Choice1Of2(GameLeft(gameId))
