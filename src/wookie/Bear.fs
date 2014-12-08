@@ -4,7 +4,7 @@ open System
 open Core
 
 type Commands =
-    | SignIn of string*int
+    | SignIn of string*string*int
     | AddFriends of int list
     | ScheduleGame of Guid*DateTime*string
     | JoinGame of Guid
@@ -13,7 +13,7 @@ type Commands =
     
 
 type Events =
-    | SignedIn of string*int
+    | SignedIn of string*string*int
     | GameScheduled of Guid*DateTime*string
     | GameJoined of Guid
     | GameLeft of Guid
@@ -27,7 +27,7 @@ type State = {
 with static member Initial = { hasJoined = false; gamesCreated = [] }
 
 let apply state = function
-    | SignedIn (username,avatarId) -> { state with hasJoined=true }
+    | SignedIn (username,socialId,avatarId) -> { state with hasJoined=true }
     | GameScheduled (gameId, gameDate, gameLocation) ->  { state with  gamesCreated = gameId::state.gamesCreated }
     | GameJoined (gameId) -> state
     | GameLeft (gameId) -> state
@@ -41,7 +41,7 @@ module private Assert =
     let validCancelGame bear gameId = validator (fun (p,id) -> List.exists ((=)id) p.gamesCreated) ["this Bear cannot cancel this game"] (bear,gameId)
 
 let exec state = function
-    | SignIn (bearName,avatarId)-> Assert.validSignIn state bearName <?>  SignedIn(bearName,avatarId) 
+    | SignIn (bearName,socialId,avatarId)-> Assert.validSignIn state bearName <?>  SignedIn(bearName,socialId,avatarId) 
     | ScheduleGame (gameId,  gameDate, gameLocation) -> Choice1Of2  ( GameScheduled(gameId,   gameDate, gameLocation))
     | JoinGame gameId -> Choice1Of2(GameJoined(gameId))
     | LeaveGame gameId -> Choice1Of2(GameLeft(gameId))
