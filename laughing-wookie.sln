@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{1F1B4F0F-2998-4D74-865B-9122611C2B14}"
 	ProjectSection(SolutionItems) = preProject
@@ -39,6 +39,8 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "server", "src\server\server
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "wookie.unit.tests", "tests\wookie.unit.tests\wookie.unit.tests.fsproj", "{2F5086A6-9072-4127-8D3C-0AFD08F9473E}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "katanaServer", "src\katanaServer\katanaServer.fsproj", "{C1F85E8D-7313-4C74-9651-BE4E08B815BB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -64,6 +66,12 @@ Global
 		{2F5086A6-9072-4127-8D3C-0AFD08F9473E}.Mono|Any CPU.Build.0 = Mono|Any CPU
 		{2F5086A6-9072-4127-8D3C-0AFD08F9473E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F5086A6-9072-4127-8D3C-0AFD08F9473E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1F85E8D-7313-4C74-9651-BE4E08B815BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1F85E8D-7313-4C74-9651-BE4E08B815BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1F85E8D-7313-4C74-9651-BE4E08B815BB}.Mono|Any CPU.ActiveCfg = Release|Any CPU
+		{C1F85E8D-7313-4C74-9651-BE4E08B815BB}.Mono|Any CPU.Build.0 = Release|Any CPU
+		{C1F85E8D-7313-4C74-9651-BE4E08B815BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1F85E8D-7313-4C74-9651-BE4E08B815BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
