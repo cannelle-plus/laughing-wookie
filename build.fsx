@@ -176,7 +176,7 @@ let deployTask  (deployTarget,t) =
 
 let setConfig (deployTarget,t) =
     DeleteFile (deployTarget + "server.exe.config")
-    Rename (deployTarget + "server.exe.config") (deployTarget + "app.config_" + t)
+    Rename (deployTarget + "server.exe.config") (deployTarget + "App.config_" + t)
 
 Target "Deploy" (fun _ ->
     ["windows"; "linux"; "prod"]

@@ -58,5 +58,6 @@ let main argv =
     Console.WriteLine("Server started...")
     Console.WriteLine("listenning on " + host)
     
-    Console.ReadKey(true) |> ignore
+    Console.ReadLine() |> ignore
+    Console.WriteLine("Server stopped...")
     0
