@@ -66,6 +66,7 @@ let appToDeploy = "src/server/bin/Release"
 // The files to deploy
 let deployDir = "./deploy/"
 
+
 // --------------------------------------------------------------------------------------
 // END TODO: The rest of the file includes standard build steps
 // --------------------------------------------------------------------------------------
@@ -164,12 +165,26 @@ Target "SourceLink" (fun _ ->
 // --------------------------------------------------------------------------------------
 // deploy the app
 
-Target "Deploy" (fun _ ->
+let deployTarget t = (deployDir + t + "/", t)
+
+let deployTask  (deployTarget,t) = 
     let from = directoryInfo(appToDeploy)
-    let towards =directoryInfo(deployDir)
+    let towards =directoryInfo(deployTarget)
     copyRecursive  from towards  false
     |> Log "Deploy-Output:"
-)
+    (deployTarget,t)
+
+let setConfig (deployTarget,t) =
+    DeleteFile (deployTarget + "server.exe.config")
+    Rename (deployTarget + "server.exe.config") (deployTarget + "app.config_" + t)
+
+Target "Deploy" (fun _ ->
+    ["windows"; "linux"; "prod"]
+    |> List.map deployTarget
+    |> List.map deployTask 
+    |> List.filter (fun (p,t) -> t<> "windows")
+    |> List.iter setConfig 
+    )
 
 // --------------------------------------------------------------------------------------
 // Generate the documentation
@@ -197,8 +212,8 @@ Target "All" DoNothing
   ==> "Build"
   ==> "RunTests"
   ==> "Deploy"
-  =?> ("GenerateReferenceDocs",isLocalBuild && not isMono)
-  =?> ("GenerateDocs",isLocalBuild && not isMono)
+//  =?> ("GenerateReferenceDocs",isLocalBuild && not isMono)
+//  =?> ("GenerateDocs",isLocalBuild && not isMono)
   ==> "All"
 
 
