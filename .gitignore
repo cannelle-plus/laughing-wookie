@@ -25,6 +25,7 @@ build/
 # MSTest test Results
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
+wookie.Unit.Tests.dll.xml
 
 *_i.c
 *_p.c
